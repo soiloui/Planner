@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./img/favico/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./img/favico/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./img/favico/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./img/favico/site.webmanifest" />
+    <title>Planner</title>
+  </head>
+  <body>
+    <div class="loader"></div>
+
+    <div class="clouds-moving-container">
+      <img src="./img/cloud.svg" class="cloud-moving" />
+      <img src="./img/cloud.svg" class="cloud-moving" />
+      <img src="./img/cloud.svg" class="cloud-moving" />
+      <img src="./img/cloud.svg" class="cloud-moving" />
+      <img src="./img/cloud.svg" class="cloud-moving" />
+      <img src="./img/cloud.svg" class="cloud-moving" />
+    </div>
+
+    <section class="plane-container section--1">
+      <div class="one-text-container">
+        <h1>Planner</h1>
+        <p>Get your ideas ready.</p>
+      </div>
+      <img class="plane" src="./img/plane.png" />
+
+      <img src="./img/cloud.svg" class="cloud cloud--1" />
+      <img src="./img/cloud.svg" class="cloud cloud--2" />
+      <img src="./img/cloud.svg" class="cloud cloud--3" />
+      <img src="./img/cloud.svg" class="cloud cloud--4" />
+    </section>
+
+    <section class="svg-drawing section--2">
+      <div class="steps-container">
+        <div class="line-container">
+          <svg
+            preserveAspectRatio="xMidYMax meet"
+            viewBox="0 0 187 375"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M92.9995 0.5C73.4993 123 208.809 143 182.5 100.5C156.191 58 -7.37054 301.575 1.99991 198.5C5.99991 154.5 195 364.5 182.5 299.5C170 234.5 146.5 374 86.9999 374"
+            />
+          </svg>
+
+          <div class="step step--1 parallax" data-plx-move="100">
+            <p class="step__number">01</p>
+            <p class="step__text">Get know with Planner.</p>
+          </div>
+
+          <div class="step step--2">
+            <p class="step__number">02</p>
+            <p class="step__text">Find your way.</p>
+          </div>
+
+          <div class="step step--3">
+            <p class="step__number">03</p>
+            <p class="step__text">Fulfil your dreams.</p>
+          </div>
+        </div>
+        <div class="step step--4 step--final">
+          <p class="step__text--final">Stay inspired</p>
+          <a href="#cta" id="cta" class="cta">Get Planner</a>
+
+          <div class="final-bg"></div>
+        </div>
+      </div>
+    </section>
+
+    <script src="./gsap-public/minified/gsap.min.js"></script>
+    <script src="./gsap-public/minified/ScrollTrigger.min.js"></script>
+    <script src="./gsap-public/minified/MotionPathPlugin.min.js"></script>
+
+    <script src="./main.js"></script>
+  </body>
+</html>

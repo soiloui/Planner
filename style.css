@@ -1,0 +1,268 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+  background: #e0eafc;
+  background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
+  background: linear-gradient(to right, #cfdef3, #e0eafc);
+}
+section {
+  position: relative;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: #fff;
+  z-index: 9;
+}
+
+.clouds-moving-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.cloud-moving {
+  position: absolute;
+  top: 100%;
+  z-index: -1;
+}
+
+.section--1 {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+.one-text-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.one-text-container h1 {
+  font-size: 10rem;
+  font-weight: 800;
+  line-height: 1.2;
+
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.one-text-container p {
+  font-size: 2rem;
+}
+
+.cloud {
+  position: absolute;
+
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
+}
+.cloud--1 {
+  width: 40vmin;
+  left: 0;
+  bottom: 0%;
+}
+.cloud--2 {
+  width: 30vmin;
+  bottom: 0%;
+  right: 2%;
+}
+.cloud--3 {
+  width: 20vmin;
+  bottom: 0%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cloud--4 {
+  width: 23vmin;
+  bottom: 0%;
+  left: 20%;
+}
+
+.plane {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  display: block;
+  width: 60px;
+
+  user-select: none;
+  z-index: 1;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+.steps-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  overflow: hidden;
+}
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100vh;
+  line-height: 1;
+}
+.step:nth-of-type(odd) {
+  padding-left: 40px;
+}
+.step:nth-of-type(even) {
+  padding-right: 40px;
+  text-align: right;
+}
+
+.step__number {
+  color: rgb(140, 198, 231);
+  font-size: 10rem;
+  font-weight: 600;
+}
+.step__text {
+  font-size: 3rem;
+}
+
+.step.step--final {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0;
+  text-align: center;
+}
+.step__text--final {
+  padding: 80px 0;
+  text-transform: uppercase;
+  font-size: 8rem;
+  font-weight: 600;
+}
+.cta {
+  display: block;
+  padding: 0.5em 1em;
+  width: fit-content;
+
+  font-size: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  color: #fff;
+  border: 3px solid #fff;
+  background: transparent;
+  border-radius: 3px;
+
+  transition: color 0.25s ease-in-out, border 0.25s ease-in-out,
+    background 0.25s ease-in-out;
+}
+.cta:hover {
+  color: rgb(140, 198, 231);
+  background: #fff;
+  border: 3px solid transparent;
+}
+.final-bg {
+  position: absolute;
+  left: 0;
+  transform: skewY(15deg);
+
+  height: 80vh;
+  width: 150%;
+
+  z-index: -1;
+  background: rgb(140, 198, 231);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.line-container {
+  position: relative;
+}
+.line-container svg {
+  position: absolute;
+  display: inline-block;
+  height: 84%;
+  width: 100%;
+  margin: auto;
+
+  stroke: #fff;
+  stroke-width: 1;
+}
+.line-container path {
+  transition: all 0.8s 0s ease-out;
+}
+
+/* --------------- MEDIA QUERIES ---------------- */
+
+@media (max-width: 600px) {
+  .one-text-container h1 {
+    font-size: 3rem;
+  }
+  .one-text-container p {
+    font-size: 1rem;
+  }
+  .plane {
+    width: 35px;
+  }
+
+  .step__number {
+    font-size: 5rem;
+  }
+  .step__text {
+    font-size: 1.2rem;
+  }
+
+  .step__text--final {
+    font-size: 3rem;
+  }
+  .cta {
+    font-size: 1.3rem;
+  }
+
+  .line-container svg {
+    display: none;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .one-text-container h1 {
+    font-size: 5rem;
+  }
+  .one-text-container p {
+    font-size: 1.3rem;
+  }
+  .plane {
+    width: 45px;
+  }
+
+  .step__number {
+    font-size: 6rem;
+  }
+  .step__text {
+    font-size: 1.4rem;
+  }
+
+  .step__text--final {
+    font-size: 4rem;
+  }
+  .cta {
+    font-size: 1.5rem;
+  }
+}
