@@ -4,6 +4,34 @@
   box-sizing: border-box;
 }
 
+:root {
+  --col-accent: #5ec4ff;
+  --font-size-XXL: min(
+    max(2.25rem, calc(2.25rem + ((1vw - 0.1875rem) * 12.6531))),
+    10rem
+  );
+  --font-size-XL: min(
+    max(1.5rem, calc(1.5rem + ((1vw - 0.1875rem) * 6.1224))),
+    6rem
+  );
+  --font-size-L: min(
+    max(1.5rem, calc(1.5rem + ((1vw - 0.1875rem) * 1.2245))),
+    3rem
+  );
+  --font-size-M: min(
+    max(1.25rem, calc(1.25rem + ((1vw - 0.1875rem) * 0.8163))),
+    2.5rem
+  );
+  --font-size-SM: min(
+    max(1rem, calc(1rem + ((1vw - 0.1875rem) * 1.6327))),
+    2rem
+  );
+  --font-size-S: min(
+    max(1rem, calc(1rem + ((1vw - 0.1875rem) * 1.2245))),
+    1.75rem
+  );
+}
+
 html,
 body {
   overflow-x: hidden;
@@ -61,7 +89,7 @@ section {
   height: 100%;
 }
 .one-text-container h1 {
-  font-size: 10rem;
+  font-size: var(--font-size-XXL);
   font-weight: 800;
   line-height: 1.2;
 
@@ -69,7 +97,7 @@ section {
 }
 
 .one-text-container p {
-  font-size: 2rem;
+  font-size: var(--font-size-M);
 }
 
 .cloud {
@@ -134,12 +162,12 @@ section {
 }
 
 .step__number {
-  color: rgb(140, 198, 231);
-  font-size: 10rem;
+  color: var(--col-accent);
+  font-size: var(--font-size-XXL);
   font-weight: 600;
 }
 .step__text {
-  font-size: 3rem;
+  font-size: var(--font-size-M);
 }
 
 .step.step--final {
@@ -154,7 +182,7 @@ section {
 .step__text--final {
   padding: 80px 0;
   text-transform: uppercase;
-  font-size: 8rem;
+  font-size: var(--font-size-XXL);
   font-weight: 600;
 }
 .cta {
@@ -162,7 +190,7 @@ section {
   padding: 0.5em 1em;
   width: fit-content;
 
-  font-size: 2rem;
+  font-size: var(--font-size-M);
   font-weight: 600;
   text-decoration: none;
 
@@ -188,7 +216,7 @@ section {
   width: 150%;
 
   z-index: -1;
-  background: rgb(140, 198, 231);
+  background: var(--col-accent);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -198,7 +226,7 @@ section {
 .line-container svg {
   position: absolute;
   display: inline-block;
-  height: 84%;
+  height: 86%;
   width: 100%;
   margin: auto;
 
@@ -212,28 +240,8 @@ section {
 /* --------------- MEDIA QUERIES ---------------- */
 
 @media (max-width: 600px) {
-  .one-text-container h1 {
-    font-size: 3rem;
-  }
-  .one-text-container p {
-    font-size: 1rem;
-  }
   .plane {
     width: 35px;
-  }
-
-  .step__number {
-    font-size: 5rem;
-  }
-  .step__text {
-    font-size: 1.2rem;
-  }
-
-  .step__text--final {
-    font-size: 3rem;
-  }
-  .cta {
-    font-size: 1.3rem;
   }
 
   .line-container svg {
@@ -242,27 +250,7 @@ section {
 }
 
 @media (min-width: 601px) and (max-width: 1200px) {
-  .one-text-container h1 {
-    font-size: 5rem;
-  }
-  .one-text-container p {
-    font-size: 1.3rem;
-  }
   .plane {
     width: 45px;
-  }
-
-  .step__number {
-    font-size: 6rem;
-  }
-  .step__text {
-    font-size: 1.4rem;
-  }
-
-  .step__text--final {
-    font-size: 4rem;
-  }
-  .cta {
-    font-size: 1.5rem;
   }
 }

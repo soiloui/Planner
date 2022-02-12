@@ -1,4 +1,14 @@
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+// ------------ UTILS START --------------
+function randomNumber(min, max, isFloor = true) {
+  let rand = Math.random() * (max - min + 1) + min;
+  return isFloor ? Math.floor(rand) : rand;
+}
+function wPercent(percent) {
+  return winWidth * (percent / 100);
+}
+function hPercent(percent) {
+  return winHeight * (percent / 100);
+}
 
 let winWidth = window.innerWidth;
 let winHeight = window.innerHeight;
@@ -7,81 +17,19 @@ window.addEventListener("resize", () => {
   winWidth = window.innerWidth;
   winHeight = window.innerHeight;
 });
+// ------------ UTILS END --------------
 
-function wPercent(percent) {
-  return winWidth * (percent / 100);
-}
-function hPercent(percent) {
-  return winHeight * (percent / 100);
-}
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-function calculatePath() {
-  return {
-    // relative: true,
-    autoRotate: true,
-    curviness: 0.5,
-    path: [
-      { x: wPercent(20), y: hPercent(-4) },
-      { x: wPercent(35), y: hPercent(5) },
-      { x: wPercent(50), y: hPercent(2) },
-      { x: wPercent(53), y: hPercent(-6) },
-      { x: wPercent(47), y: hPercent(-18) },
-      { x: wPercent(39), y: hPercent(-10) },
-      { x: wPercent(39), y: hPercent(0) },
-      { x: wPercent(47), y: hPercent(2) },
-      { x: wPercent(80), y: hPercent(-10) },
-      { x: wPercent(100), y: hPercent(2) },
-    ],
-  };
-}
-
-function firstSectionRefresh() {
-  let restore = tlFirstSection.time();
-  let paused = tlFirstSection.paused();
-
-  tlFirstSection
-    .invalidate() // clear timeline values
-    .restart() // set time to start so that initial values can be recorded
-    .pause(paused) // restore the previous paused state
-    .time(restore); // set time to same position as before
-
-  gsap.set(".plane", { clearProps: true });
-}
-
-const tlFirstSection = gsap.timeline({
-  defaults: {
-    duration: 2,
-  },
-  scrollTrigger: {
-    trigger: ".section--1",
-    start: "top top",
-    end: "+=800%",
-    pin: true,
-    // pinSpacing: false,
-    anticipatePin: 1,
-    scrub: 1,
-    // markers: true,
-    onRefresh: firstSectionRefresh,
-  },
-});
-
-window.scrollTo({ top: 1 }); // plane rotate itself to match path direction
-gsap.to(".loader", 1, { autoAlpha: 0 });
-gsap.from(".plane", 2, { autoAlpha: 0 });
-
-function randomNumber(min, max, isFloor = true) {
-  let rand = Math.random() * (max - min + 1) + min;
-  return isFloor ? Math.floor(rand) : rand;
-}
-
+// Generate random values for moving clouds
 gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   let side = randomNumber(0, 1);
   let xPos = side === 0 ? randomNumber(0, 40) : randomNumber(65, 90);
+  let rotate = side === 0 ? "0" : "180deg";
   let speed = randomNumber(10, 28);
   let delay = randomNumber(0, 10);
-  let scale = randomNumber(0.8, 1.6, false);
-  let opacity = randomNumber(0.3, 0.8, false);
-  let rotate = side === 0 ? "0" : "180deg";
+  let scale = randomNumber(8, 25) / 10;
+  let opacity = randomNumber(3, 8) / 10;
 
   gsap.fromTo(
     cloud,
@@ -106,6 +54,61 @@ gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   );
 });
 
+// Make plane looks good on load
+window.scrollTo({ top: 1 });
+gsap.to(".loader", 1, { autoAlpha: 0 });
+gsap.from(".plane", 2, { autoAlpha: 0 });
+
+// Plane path
+function calculatePath() {
+  return {
+    autoRotate: true,
+    curviness: 0.5,
+    path: [
+      { x: wPercent(20), y: wPercent(-4) },
+      { x: wPercent(50), y: wPercent(2) },
+      { x: wPercent(56), y: wPercent(-6) },
+      { x: wPercent(47), y: wPercent(-13) },
+      { x: wPercent(39), y: wPercent(-10) },
+      { x: wPercent(39), y: 0 },
+      { x: wPercent(47), y: wPercent(2) },
+      { x: wPercent(80), y: wPercent(-10) },
+      { x: wPercent(100), y: wPercent(-5) },
+    ],
+  };
+}
+
+// Recalculate plane path on window resize
+function firstSectionRefresh() {
+  let restore = tlFirstSection.time();
+  let paused = tlFirstSection.paused();
+
+  tlFirstSection
+    .invalidate() // clear timeline values
+    .restart()
+    .pause(paused)
+    .time(restore);
+
+  gsap.set(".plane", { clearProps: true });
+}
+
+// ------------------ SECTION 1 --------------------
+const tlFirstSection = gsap.timeline({
+  defaults: {
+    duration: 2,
+  },
+  scrollTrigger: {
+    trigger: ".section--1",
+    start: "top top",
+    end: "+=800%",
+    pin: true,
+    anticipatePin: 1,
+    scrub: 1,
+    // markers: true,
+    onRefresh: firstSectionRefresh,
+  },
+});
+
 tlFirstSection
   .fromTo(
     ".plane",
@@ -115,9 +118,6 @@ tlFirstSection
     },
     {
       motionPath: calculatePath,
-      onComplete: () => {
-        // document.querySelector(".plane").style.display = "none";
-      },
     },
 
     "first"
@@ -203,7 +203,7 @@ tlFirstSection
       autoAlpha: 1,
       y: 20,
     },
-    "first+=4.5"
+    "first+=3.5"
   );
 
 // ------------------ SECTION 2 --------------------
@@ -314,19 +314,19 @@ const tlSecondSectionStep_final = gsap.timeline({
 tlSecondSectionStep_final
   .fromTo(
     ".final-bg",
-    15,
+    25,
     { y: "-50%", x: "-100%", autoAlpha: 0 },
     { y: "10%", x: 0, autoAlpha: 1 },
     "first"
   )
   .fromTo(
     ".step--final .step__text--final",
-    15,
+    25,
     { y: 100, autoAlpha: 0 },
     { y: 0, autoAlpha: 1 },
-    "first+=2"
+    "first+=9"
   )
-  .fromTo(".step--final .cta", 8, { autoAlpha: 0 }, { autoAlpha: 1 }, "-=1");
+  .fromTo(".step--final .cta", 10, { autoAlpha: 0 }, { autoAlpha: 1 }, "-=6");
 
 // LINE DRAWING
 
@@ -337,9 +337,7 @@ let pathLength = path.getTotalLength();
 path.style.strokeDasharray = `${pathLength} ${pathLength}`;
 path.style.strokeDashoffset = pathLength;
 
-let previousDashOffset = pathLength;
-
-window.addEventListener("scroll", () => {
+function drawSVG() {
   // IF WE WANT SHOW SVG BASED ON TOTAL PAGE HEIGHT:
 
   //   let scrollPercentage =
@@ -353,5 +351,8 @@ window.addEventListener("scroll", () => {
   scrollPercentage = 1 + scrollPercentage;
 
   let drawLength = pathLength * scrollPercentage;
+
   path.style.strokeDashoffset = pathLength + drawLength;
-});
+}
+
+window.addEventListener("scroll", drawSVG);
