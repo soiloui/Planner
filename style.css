@@ -7,7 +7,7 @@
 :root {
   --col-accent: #5ec4ff;
   --font-size-XXL: min(
-    max(2.25rem, calc(2.25rem + ((1vw - 0.1875rem) * 12.6531))),
+    max(3rem, calc(3rem + ((1vw - 0.1875rem) * 12.6531))),
     10rem
   );
   --font-size-XL: min(
@@ -244,6 +244,10 @@ section {
     width: 35px;
   }
 
+  .step__number {
+    font-size: 5rem;
+  }
+
   .line-container svg {
     display: none;
   }
@@ -251,6 +255,6 @@ section {
 
 @media (min-width: 601px) and (max-width: 1200px) {
   .plane {
-    width: 45px;
+    width: 50px;
   }
 }

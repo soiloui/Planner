@@ -100,7 +100,7 @@ const tlFirstSection = gsap.timeline({
   scrollTrigger: {
     trigger: ".section--1",
     start: "top top",
-    end: "+=800%",
+    end: "+=500%",
     pin: true,
     anticipatePin: 1,
     scrub: 1,
@@ -118,6 +118,7 @@ tlFirstSection
     },
     {
       motionPath: calculatePath,
+      ease: "none",
     },
 
     "first"
