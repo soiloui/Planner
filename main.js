@@ -308,7 +308,6 @@ const tlSecondSectionStep_final = gsap.timeline({
     start: "50% 65%",
     end: "bottom bottom",
     scrub: 3,
-    snap: 1,
     // markers: true,
   },
 });
