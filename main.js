@@ -100,7 +100,7 @@ const tlFirstSection = gsap.timeline({
   scrollTrigger: {
     trigger: ".section--1",
     start: "top top",
-    end: "+=500%",
+    end: "+=300%",
     pin: true,
     anticipatePin: 1,
     scrub: 1,
@@ -112,7 +112,7 @@ const tlFirstSection = gsap.timeline({
 tlFirstSection
   .fromTo(
     ".plane",
-    8,
+    6,
     {
       motionPath: { path: [{ x: 0, y: 0 }] },
     },
@@ -305,9 +305,10 @@ tlSecondSectionStep_3
 const tlSecondSectionStep_final = gsap.timeline({
   scrollTrigger: {
     trigger: ".step--final",
-    start: "50% 51%",
+    start: "50% 65%",
     end: "bottom bottom",
     scrub: 3,
+    snap: 1,
     // markers: true,
   },
 });
