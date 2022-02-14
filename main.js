@@ -336,7 +336,7 @@ tlSecondSectionStep_final
   .fromTo(".step--final .cta", 10, { autoAlpha: 0 }, { autoAlpha: 1 }, "-=6");
 
 // LINE DRAWING
-
+const pageContainer = document.querySelector(".page-container");
 const lineContainer = document.querySelector(".line-container");
 const path = lineContainer.querySelector("path");
 let pathLength = path.getTotalLength();
@@ -345,16 +345,9 @@ path.style.strokeDasharray = `${pathLength} ${pathLength}`;
 path.style.strokeDashoffset = pathLength;
 
 function drawSVG() {
-  // IF WE WANT SHOW SVG BASED ON TOTAL PAGE HEIGHT:
-
-  //   let scrollPercentage =
-  //     (document.documentElement.scrollTop + document.body.scrollTop) /
-  //     (document.documentElement.scrollHeight -
-  //       document.documentElement.clientHeight);
-
-  //   IF WE WANT SHOW SVG BASED ON SECITON
   let rect = lineContainer.getBoundingClientRect();
-  let scrollPercentage = (rect.bottom - window.innerHeight) / rect.height;
+  let scrollPercentage =
+    (rect.bottom - pageContainer.offsetHeight) / rect.height;
   scrollPercentage = 1 + scrollPercentage;
 
   let drawLength = pathLength * scrollPercentage;
@@ -362,4 +355,4 @@ function drawSVG() {
   path.style.strokeDashoffset = pathLength + drawLength;
 }
 
-window.addEventListener("scroll", drawSVG);
+pageContainer.addEventListener("scroll", drawSVG);
