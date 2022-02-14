@@ -3,6 +3,9 @@ function randomNumber(min, max, isFloor = true) {
   let rand = Math.random() * (max - min + 1) + min;
   return isFloor ? Math.floor(rand) : rand;
 }
+function isOdd(number) {
+  return number % 2;
+}
 function wPercent(percent) {
   return winWidth * (percent / 100);
 }
@@ -18,11 +21,25 @@ window.addEventListener("resize", () => {
   winHeight = window.innerHeight;
 });
 // ------------ UTILS END --------------
+// ------------ GENERAL STRART --------------
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 // Force show address bar on mobile
 ScrollTrigger.defaults({ scroller: ".page-container" });
+
+// Simple parallax effect
+gsap.utils.toArray(".parallax").forEach((element) => {
+  const tlParallax = gsap.timeline({
+    scrollTrigger: {
+      trigger: element,
+      start: "top 20%",
+      scrub: 2,
+    },
+  });
+
+  tlParallax.to(element, { y: element.dataset.plxMove });
+});
 
 // Generate random values for moving clouds
 gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
@@ -57,10 +74,13 @@ gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   );
 });
 
+// ------------ GENERAL END --------------
+// ------------------ SECTION 1 --------------------
+
 // Make plane looks good on load
 window.scrollTo({ top: 1 });
 gsap.to(".loader", 1, { autoAlpha: 0 });
-gsap.from(".plane", 2, { autoAlpha: 0 });
+gsap.from(".plane", 1, { autoAlpha: 0 });
 if (window.scrollY > 20) gsap.to(".plane", { x: -100 });
 
 // Plane path
@@ -94,7 +114,6 @@ function firstSectionRefresh() {
     .time(restore);
 }
 
-// ------------------ SECTION 1 --------------------
 const tlFirstSection = gsap.timeline({
   defaults: {
     duration: 2,
@@ -190,13 +209,12 @@ tlFirstSection
       autoAlpha: 0,
       scale: 0.8,
       y: 40,
-      x: 10,
     },
     {
       scale: 1,
       autoAlpha: 1,
       y: 5,
-      x: 0,
+      x: "-50%",
     },
     "first+=3"
   )
@@ -214,21 +232,6 @@ tlFirstSection
   );
 
 // ------------------ SECTION 2 --------------------
-
-gsap.utils.toArray(".parallax").forEach((element) => {
-  const tlParallax = gsap.timeline({
-    scrollTrigger: {
-      trigger: element,
-      start: "top 20%",
-      // pin: true,
-      // pinSpacing: false,
-      // markers: true,
-      scrub: 2,
-    },
-  });
-
-  tlParallax.to(element, { y: element.dataset.plxMove });
-});
 
 const tlSecondSectionStep_1 = gsap.timeline({
   scrollTrigger: {
@@ -311,8 +314,8 @@ tlSecondSectionStep_3
 const tlSecondSectionStep_final = gsap.timeline({
   scrollTrigger: {
     trigger: ".step--final",
-    start: "50% 55%",
-    end: "bottom bottom",
+    start: "50% bottom",
+    end: "75% bottom",
     scrub: 3,
     // markers: true,
   },
@@ -356,3 +359,69 @@ function drawSVG() {
 }
 
 pageContainer.addEventListener("scroll", drawSVG);
+
+// ------------------ SECTION 3 --------------------
+const tlThirdSectionContainer = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".features-container",
+    start: "top 50%",
+    end: "top 10%",
+    scrub: 2,
+    // markers: true,
+  },
+});
+
+tlThirdSectionContainer.fromTo(
+  ".features",
+  2,
+  { y: 100, autoAlpha: 0 },
+  { y: 0, autoAlpha: 1 },
+  "first"
+);
+
+gsap.utils.toArray(".feature").forEach((element, index) => {
+  const tlThirdSectionFeature = gsap.timeline({
+    defaults: {
+      duration: 2,
+    },
+    scrollTrigger: {
+      trigger: element,
+      start: "top 70%",
+      end: "top 30%",
+      scrub: 2.5,
+      // markers: true,
+    },
+  });
+
+  let elementSVG = element.querySelector(".feature__svg");
+  let elementName = element.querySelector(".feature__name");
+  let elementDesc = element.querySelector(".feature__desc");
+
+  let xMove = isOdd(index) ? -100 : 100;
+  let transformStart = `rotateX(80deg) rotateY(9deg) scaleY(0.5) scaleX(0.5)`;
+  let transformFinish = `rotateX(10deg) rotateY(9deg)`;
+
+  tlThirdSectionFeature
+    .fromTo(
+      elementSVG,
+      {
+        y: -100,
+        autoAlpha: 0,
+        transform: transformStart,
+      },
+      { y: 0, autoAlpha: 1, transform: transformFinish },
+      "first"
+    )
+    .fromTo(
+      elementName,
+      { x: xMove, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1 },
+      "first+=0.7"
+    )
+    .fromTo(
+      elementDesc,
+      { x: xMove, autoAlpha: 0 },
+      { x: 0, autoAlpha: 1 },
+      "first+=1.5"
+    );
+});
