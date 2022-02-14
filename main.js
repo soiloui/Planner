@@ -121,7 +121,7 @@ const tlFirstSection = gsap.timeline({
   scrollTrigger: {
     trigger: ".section--1",
     start: "top top",
-    end: "+=200%",
+    end: winWidth > 600 ? "+=3000" : "+=1500",
     pin: true,
     pinType: "fixed",
     anticipatePin: 1,
