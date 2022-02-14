@@ -357,10 +357,6 @@ section {
     );
   }
 
-  .line-container svg {
-    /* display: none; */
-  }
-
   .features {
     background: -moz-linear-gradient(
       180deg,
