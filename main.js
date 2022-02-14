@@ -21,6 +21,9 @@ window.addEventListener("resize", () => {
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
+// Force show address bar on mobile
+ScrollTrigger.defaults({ scroller: ".page-container" });
+
 // Generate random values for moving clouds
 gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   let side = randomNumber(0, 1);
@@ -58,6 +61,7 @@ gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
 window.scrollTo({ top: 1 });
 gsap.to(".loader", 1, { autoAlpha: 0 });
 gsap.from(".plane", 2, { autoAlpha: 0 });
+if (window.scrollY > 20) gsap.to(".plane", { x: -100 });
 
 // Plane path
 function calculatePath() {
@@ -88,8 +92,6 @@ function firstSectionRefresh() {
     .restart()
     .pause(paused)
     .time(restore);
-
-  gsap.set(".plane", { clearProps: true });
 }
 
 // ------------------ SECTION 1 --------------------
@@ -102,6 +104,7 @@ const tlFirstSection = gsap.timeline({
     start: "top top",
     end: "+=300%",
     pin: true,
+    pinType: "fixed",
     anticipatePin: 1,
     scrub: 1,
     // markers: true,
@@ -119,6 +122,9 @@ tlFirstSection
     {
       motionPath: calculatePath,
       ease: "none",
+      onComplete: () => {
+        document.querySelector(".plane").style.transform = "translateX(10000)";
+      },
     },
 
     "first"
@@ -305,7 +311,7 @@ tlSecondSectionStep_3
 const tlSecondSectionStep_final = gsap.timeline({
   scrollTrigger: {
     trigger: ".step--final",
-    start: "50% 65%",
+    start: "50% 55%",
     end: "bottom bottom",
     scrub: 3,
     // markers: true,

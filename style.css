@@ -1,11 +1,7 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --col-accent: #5ec4ff;
+  --border-radius: 3px;
+
   --font-size-XXL: min(
     max(3rem, calc(3rem + ((1vw - 0.1875rem) * 12.6531))),
     10rem
@@ -27,14 +23,22 @@
     2rem
   );
   --font-size-S: min(
-    max(1rem, calc(1rem + ((1vw - 0.1875rem) * 1.2245))),
+    max(1rem, calc(1rem + ((1vw - 0.1875rem) * 0.5))),
     1.75rem
   );
 }
 
+/* ----------------- GENERAL --------------- */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 html,
 body {
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
 }
 body {
   font-family: "Poppins", sans-serif;
@@ -43,6 +47,22 @@ body {
   background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
   background: linear-gradient(to right, #cfdef3, #e0eafc);
 }
+
+.page-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  border: 1px solid transparent;
+}
+.section--1 {
+  pointer-events: none;
+}
+
 section {
   position: relative;
 }
@@ -58,6 +78,11 @@ section {
   z-index: 9;
 }
 
+.width-wrapper {
+  max-width: 1400px;
+  margin: auto;
+}
+
 .clouds-moving-container {
   position: fixed;
   top: 0;
@@ -69,9 +94,9 @@ section {
 .cloud-moving {
   position: absolute;
   top: 100%;
-  z-index: -1;
 }
 
+/* ----------------- SECTION 1 --------------- */
 .section--1 {
   position: relative;
   width: 100%;
@@ -139,11 +164,9 @@ section {
   filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
 }
 
+/* ----------------- SECTION 2 --------------- */
 .steps-container {
   width: 100%;
-  max-width: 1400px;
-  margin: auto;
-  overflow: hidden;
 }
 .step {
   display: flex;
@@ -197,7 +220,7 @@ section {
   color: #fff;
   border: 3px solid #fff;
   background: transparent;
-  border-radius: 3px;
+  border-radius: var(--border-radius);
 
   transition: color 0.25s ease-in-out, border 0.25s ease-in-out,
     background 0.25s ease-in-out;
@@ -213,7 +236,7 @@ section {
   transform: skewY(15deg);
 
   height: 80vh;
-  width: 150%;
+  width: 100%;
 
   z-index: -1;
   background: var(--col-accent);
@@ -237,6 +260,8 @@ section {
   transition: all 0.8s 0s ease-out;
 }
 
+/* ----------------- SECTION 3 --------------- */
+
 /* --------------- MEDIA QUERIES ---------------- */
 
 @media (max-width: 600px) {
@@ -251,6 +276,11 @@ section {
   .line-container svg {
     display: none;
   }
+
+  /* .features-container {
+    padding-top: 150px;
+    flex-direction: column;
+  } */
 }
 
 @media (min-width: 601px) and (max-width: 1200px) {
