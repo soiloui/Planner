@@ -28,19 +28,6 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 // Force show address bar on mobile
 ScrollTrigger.defaults({ scroller: ".page-container" });
 
-// Simple parallax effect
-gsap.utils.toArray(".parallax").forEach((element) => {
-  const tlParallax = gsap.timeline({
-    scrollTrigger: {
-      trigger: element,
-      start: "top 20%",
-      scrub: 2,
-    },
-  });
-
-  tlParallax.to(element, { y: element.dataset.plxMove });
-});
-
 // Generate random values for moving clouds
 gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   let side = randomNumber(0, 1);
@@ -81,6 +68,7 @@ gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
 window.scrollTo({ top: 1 });
 gsap.to(".loader", 1, { autoAlpha: 0 });
 
+// Start message
 let scrollMessageDelayTimeout;
 const tlScrollMessage = gsap.to(".scroll-message", 3, {
   delay: 2,
@@ -398,67 +386,84 @@ function drawSVG() {
 pageContainer.addEventListener("scroll", drawSVG);
 
 // ------------------ SECTION 3 --------------------
-const tlThirdSectionContainer = gsap.timeline({
+const tlThirdSection = gsap.timeline({
   scrollTrigger: {
     trigger: ".features-container",
-    start: "top 50%",
-    end: "top 10%",
-    scrub: 2,
+    start: `top top`,
+    end: "+=450%",
+    scrub: 1,
+    pin: ".section--3",
+    pinType: "fixed",
+    anticipatePin: 1,
     // markers: true,
   },
 });
 
-tlThirdSectionContainer.fromTo(
+let tlFeatures = gsap.timeline();
+tlFeatures.fromTo(
   ".features",
   2,
-  { y: 100, autoAlpha: 0 },
-  { y: 0, autoAlpha: 1 },
-  "first"
+  { y: 400, autoAlpha: 0 },
+  { y: 0, autoAlpha: 1 }
 );
 
-gsap.utils.toArray(".feature").forEach((element, index) => {
-  const tlThirdSectionFeature = gsap.timeline({
-    defaults: {
-      duration: 2,
-    },
-    scrollTrigger: {
-      trigger: element,
-      start: "top 70%",
-      end: "top 30%",
-      scrub: 2.5,
-      // markers: true,
-    },
-  });
+tlThirdSection.add(tlFeatures);
 
+gsap.utils.toArray(".feature").forEach((element, index) => {
   let elementSVG = element.querySelector(".feature__svg");
   let elementName = element.querySelector(".feature__name");
   let elementDesc = element.querySelector(".feature__desc");
 
   let xMove = isOdd(index) ? -100 : 100;
-  let transformStart = `rotateX(80deg) rotateY(9deg) scaleY(0.5) scaleX(0.5)`;
-  let transformFinish = `rotateX(10deg) rotateY(9deg)`;
+  let transformStartSVG = `rotateX(80deg) rotateY(9deg) scaleY(0.5) scaleX(0.5)`;
+  let transformFinishSVG = `rotateX(10deg) rotateY(9deg)`;
 
-  tlThirdSectionFeature
+  let tlFeature = gsap.timeline({ defaults: { duration: 3 } });
+  tlFeature
     .fromTo(
       elementSVG,
+      3,
       {
         y: -100,
         autoAlpha: 0,
-        transform: transformStart,
+        transform: transformStartSVG,
       },
-      { y: 0, autoAlpha: 1, transform: transformFinish },
-      "first"
+      { y: 0, autoAlpha: 1, transform: transformFinishSVG },
+      "feature"
     )
     .fromTo(
       elementName,
       { x: xMove, autoAlpha: 0 },
       { x: 0, autoAlpha: 1 },
-      "first+=0.7"
+      "feature+=0.3"
     )
     .fromTo(
       elementDesc,
       { x: xMove, autoAlpha: 0 },
       { x: 0, autoAlpha: 1 },
-      "first+=1.5"
+      "feature+=0.6"
+    )
+    .fromTo(element, 1.8, {}, {})
+    .fromTo(
+      element,
+      3,
+      { y: "-50%", x: "-50%", autoAlpha: 1 },
+      { y: "-100%", x: "-50%", autoAlpha: 0 }
     );
+
+  tlThirdSection.add(tlFeature);
+});
+
+// ------------------ ADDITIONAL --------------------
+// Simple parallax effect
+gsap.utils.toArray(".parallax").forEach((element) => {
+  let tlParallax = gsap.timeline({
+    scrollTrigger: {
+      trigger: element,
+      start: "top 20%",
+      scrub: 2,
+      // markers: true,
+    },
+  });
+  tlParallax.to(element, { y: element.dataset.plxMove });
 });
