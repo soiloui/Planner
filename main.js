@@ -77,11 +77,48 @@ gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
 // ------------ GENERAL END --------------
 // ------------------ SECTION 1 --------------------
 
-// Make plane looks good on load
+// Inits
 window.scrollTo({ top: 1 });
 gsap.to(".loader", 1, { autoAlpha: 0 });
+
+let scrollMessageDelayTimeout;
+const tlScrollMessage = gsap.to(".scroll-message", 3, {
+  delay: 2,
+  repeat: -1,
+  yoyo: true,
+  autoAlpha: 1,
+  scale: 1.1,
+});
+ScrollTrigger.create({
+  trigger: ".section--1",
+  start: "top top",
+  onEnter: () => {
+    if (scrollMessageDelayTimeout) clearTimeout(scrollMessageDelayTimeout);
+    tlScrollMessage.pause();
+    gsap.to(".scroll-message", {
+      autoAlpha: 0,
+    });
+  },
+  onLeaveBack: () => {
+    scrollMessageDelayTimeout = setTimeout(() => {
+      tlScrollMessage.play(0);
+    }, 4000);
+  },
+});
+
+// Make plane looks good on load
 gsap.from(".plane", 1, { autoAlpha: 0 });
 if (window.scrollY > 20) gsap.to(".plane", { x: -100 });
+gsap.to(".plane", 1.8, {
+  motionPath: {
+    autoRotate: true,
+    curviness: 0.5,
+    path: [
+      { x: wPercent(-10), y: wPercent(4) },
+      { x: wPercent(0), y: wPercent(0) },
+    ],
+  },
+});
 
 // Plane path
 function calculatePath() {
