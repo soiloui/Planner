@@ -28,19 +28,6 @@ gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 // Force show address bar on mobile
 ScrollTrigger.defaults({ scroller: ".page-container" });
 
-// Simple parallax effect
-gsap.utils.toArray(".parallax").forEach((element) => {
-  const tlParallax = gsap.timeline({
-    scrollTrigger: {
-      trigger: element,
-      start: "top 20%",
-      scrub: 2,
-    },
-  });
-
-  tlParallax.to(element, { y: element.dataset.plxMove });
-});
-
 // Generate random values for moving clouds
 gsap.utils.toArray(".cloud-moving").forEach((cloud) => {
   let side = randomNumber(0, 1);
@@ -441,12 +428,13 @@ gsap.utils.toArray(".feature").forEach((element, index) => {
   tlThirdSectionFeature
     .fromTo(
       elementSVG,
+      3,
       {
         y: -100,
         autoAlpha: 0,
         transform: transformStart,
       },
-      { y: 0, autoAlpha: 1, transform: transformFinish },
+      { delay: 0.5, y: 0, autoAlpha: 1, transform: transformFinish },
       "first"
     )
     .fromTo(
@@ -461,4 +449,18 @@ gsap.utils.toArray(".feature").forEach((element, index) => {
       { x: 0, autoAlpha: 1 },
       "first+=1.5"
     );
+});
+
+// ------------------ ADDITIONAL --------------------
+// Simple parallax effect
+gsap.utils.toArray(".parallax").forEach((element) => {
+  const tlParallax = gsap.timeline({
+    scrollTrigger: {
+      trigger: element,
+      start: "top 20%",
+      scrub: 2,
+    },
+  });
+
+  tlParallax.to(element, { y: element.dataset.plxMove });
 });
